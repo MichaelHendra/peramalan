@@ -52,7 +52,8 @@
                                         <th scope="col">Alpha</th>
                                         <th scope="col">Beta</th>
                                         <th scope="col">Gamma</th>
-                                        <th scope="col">Season</th>
+                                        <th scope="col">Periode</th>
+                                        <th scope="col">MAPE</th>
                                         <th scope="col">Akurasi</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -65,9 +66,19 @@
                                             <td>{{$item->alpha}}</td>
                                             <td>{{$item->beta}}</td>
                                             <td>{{$item->gamma}}</td>
-                                            <td>{{$item->jumlah_season}}</td>
+                                            <td>{{$item->jumlah_periode}}</td>
                                             <td>{{$item->mape}}</td>
                                             <td>{{$item->akurasi}}</td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    <a href="/peramalan/detail/{{ $item->id_perhitungan }}" class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </a>
+                                                    <a href="/peramalan/delete/{{ $item->id_perhitungan }}" class="btn btn-danger btn-sm" style="margin-left: 5px;">
+                                                        <i class="fas fa-trash-alt"></i> Delete
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @empty
                                         <td>Kosong Boss</td>

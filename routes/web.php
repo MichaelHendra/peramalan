@@ -48,4 +48,5 @@ Route::get('/peramalan',[prediksiController::class, 'index']);
 Route::get('/peramalan/masuk',[prediksiController::class, 'create']);
 Route::post('/peramalan/store',[prediksiController::class, 'store']);
 Route::get('/peramalan/detail/{id}',[prediksiController::class, 'detail']);
+Route::get('/peramalan/delete/{id}',[prediksiController::class, 'delete']);
 

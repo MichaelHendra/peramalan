@@ -50,7 +50,7 @@
             </li>
                  <!-- Nav Item - Dashboard -->
                  <li class="nav-item">
-                <a class="nav-link" href="produk">
+                <a class="nav-link" href="/produk">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Produk Roti</span></a>
             </li>
@@ -58,14 +58,14 @@
             </li>
                  <!-- Nav Item - Dashboard -->
                  <li class="nav-item">
-                <a class="nav-link" href="kotabaru">
+                <a class="nav-link" href="/kotabaru">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Data Penjualan</span></a>
             </li>
             </li>
                  <!-- Nav Item - Dashboard -->
                  <li class="nav-item">
-                <a class="nav-link" href="peramalan">
+                <a class="nav-link" href="/peramalan">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Peramalan</span></a>
             </li>

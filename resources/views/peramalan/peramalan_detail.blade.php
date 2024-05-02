@@ -14,15 +14,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                    <strong class="card-title">Penjualan Roti</strong>
-                                <div class="btn-group " role="group">
-                                    <a href="/peramalan/masuk" class="btn btn-success btn-sm">
-                                        <i class="fa fa-plus"></i> Add
-                                    </a>
-                                    <a href="/kotabaru/cetak" class="btn btn-secondary btn-sm">
-                                        <i class="fa fa-print"></i> Print
-                                    </a>
-                                </div>
+                                    <strong class="card-title">Peramalan Roti</strong>
                             </div>
                             <div class="col-md-6 text-right">
                                 {{-- <div class="input-group">
@@ -50,10 +42,10 @@
                                         <th scope="col">ID Perhitungan</th>
                                         <th scope="col">Nama Produk</th>
                                         <th scope="col">Tanggal</th>
-                                        <th scope="col">Alpha</th>
-                                        <th scope="col">Beta</th>
-                                        <th scope="col">Gamma</th>
+                                        <th scope="col">Penjualan</th>
+                                        <th scope="col">Tren</th>
                                         <th scope="col">Season</th>
+                                        <th scope="col">Peramalan</th>
                                         <th scope="col">Akurasi</th>
                                     </tr>
                                 </thead>

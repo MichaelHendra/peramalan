@@ -40,29 +40,26 @@ class prediksiController extends Controller
         $beta = $request->beta;
         $gamma = $request->gamma;
         $periode = $request->season;
-        // dd($data);
         $tanggalPenjualan = KotabaruModel::where('id_produk', $produk)->pluck('tanggal_penjualan')->toArray();
-
-
-        
-        
-        // Hitung::create([
-        //     'id_perhitungan' => $id,
-        //     'tanggal' => $tanggal,
-        //     'alpha' => $alpha,
-        //     'beta' => $beta,
-        //     'gamma' => $gamma,
-        //     'jumlah_periode' => $periode,
-        //     'mape' => 0,
-        //     'akurasi' => 0
-        // ]);
+        Hitung::create([
+            'id_perhitungan' => $id,
+            'tanggal' => $tanggal,
+            'alpha' => $alpha,
+            'beta' => $beta,
+            'gamma' => $gamma,
+            'jumlah_periode' => $periode,
+            'mape' => 0,
+            'akurasi' => 0
+        ]);
         
         $this->holtWinters($data,$alpha,$beta,$gamma,$id,$produk,$periode,$tanggalPenjualan);
-    //    dd($pre);
+
 
          return redirect('/peramalan/detail/'.$id);
         
     }
+
+    //fungsi Perhitungan Peramalan
     private function holtWinters($data, $alpha, $beta, $gamma,$id,$produk,$periode,$tanggalPenjualan)
     {
         // Inisialisasi variabel untuk level, tren, dan musim
@@ -105,27 +102,27 @@ class prediksiController extends Controller
         }
         $startIndex = count($data) - 1;
 
-for ($i = 0; $i < $periode; $i++) {
-    $level += $trend;
-    $seasonIndex = ($startIndex + $i + 1) % $seasonLength;
-    $prediction = $level + $trend + $season[$seasonIndex];
-    
-    // Calculate the next date based on the current iteration index and the number of weeks
-    $nextDate = date('Y-m-d', strtotime($tanggalPenjualan[$startIndex]) + (($i + 1) * 7 * 86400)); // Assuming each period is one week
-    
-    // Output the next date for debugging
-    // dd($nextDate);
-    
-    // Create HitungDetail record for the prediction
-    HitungDetail::create([
-        'id_perhitungan' => $id,
-        'id_produk' => $produk,
-        'tanggal_penjualan' => $nextDate,
-        'prediction' => $prediction
-    ]);
-    
-    $predictions[] = $prediction;
-}
+        for ($i = 0; $i < $periode; $i++) {
+            $level += $trend;
+            $seasonIndex = ($startIndex + $i + 1) % $seasonLength;
+            $prediction = $level + $trend + $season[$seasonIndex];
+            
+            // Calculate the next date based on the current iteration index and the number of weeks
+            $nextDate = date('Y-m-d', strtotime($tanggalPenjualan[$startIndex]) + (($i + 1) * 7 * 86400)); // Assuming each period is one week
+            
+            // Output the next date for debugging
+            // dd($nextDate);
+            
+            // Create HitungDetail record for the prediction
+            HitungDetail::create([
+                'id_perhitungan' => $id,
+                'id_produk' => $produk,
+                'tanggal_penjualan' => $nextDate,
+                'prediction' => $prediction
+            ]);
+            
+            $predictions[] = $prediction;
+        }
     
         return $predictions;
     }
@@ -133,5 +130,13 @@ for ($i = 0; $i < $periode; $i++) {
     public function detail($id) {
         $data = HitungDetail::where('id_perhitungan',$id)->get();
         return view('peramalan/peramalan_detail',['data' => $data]);
+    }
+
+    public function delete($id) {
+        $data = Hitung::where('id_perhitungan',$id);
+        $data->delete();
+        $data2 = HitungDetail::where('id_perhitungan',$id);
+        $data2->delete();
+        return redirect('/peramalan');
     }
 }
