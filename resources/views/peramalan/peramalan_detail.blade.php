@@ -2,6 +2,7 @@
 @section('title', 'Detail Perhitungan')
 @section('content')
 <div class="content mt-3">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div class="animated fadeIn">
         @if (session('status'))
             <div class="alert alert-success">
@@ -64,8 +65,12 @@
                                         <td>Kosong Boss</td>
                                     @endforelse
                                 </tbody>
-                               
                             </table>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-6">
+                            <canvas id="salesChart" width="w-10" height="h-5"></canvas>
                         </div>
                     </div>
                     {{-- {{ $pesan->links() }} --}}
@@ -77,24 +82,48 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#filterButton').click(function() {
-                var selectedProduk = $('#filterProduk').val();
-                $.ajax({
-                    url: '/kotabaru/filter',
-                    type: 'GET',
-                    data: {
-                        produk: selectedProduk
-                    },
-                    success: function(response) {
-                        $('#penjualanTableBody').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/peramalan/chart/{{$data2->id_perhitungan}}')
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(item => item.tanggal_penjualan);
+                    const jumlahTerjual = data.map(item => item.value);
+                    const prediksiPenjualan = data.map(item => item.prediction);
+
+                    const ctx = document.getElementById('salesChart').getContext('2d');
+                    const salesChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Jumlah Terjual',
+                                    data: jumlahTerjual,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Prediksi Penjualan',
+                                    data: prediksiPenjualan,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
                 });
-            });
         });
     </script>
 @endsection

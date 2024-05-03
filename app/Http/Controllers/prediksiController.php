@@ -66,7 +66,7 @@ class prediksiController extends Controller
         $level = $data[0];
         $trend = 0;
         $season = [];
-        $seasonLength = 12;
+        $seasonLength = 4;
         // dd($level);
     
         // Hitung musim awal
@@ -129,7 +129,13 @@ class prediksiController extends Controller
 
     public function detail($id) {
         $data = HitungDetail::where('id_perhitungan',$id)->get();
-        return view('peramalan/peramalan_detail',['data' => $data]);
+        $data2 = HitungDetail::where('id_perhitungan',$id)->get()->first();
+        return view('peramalan/peramalan_detail',['data' => $data,'data2' => $data2]);
+    }
+
+    public function getData($id) {
+        $salesData = HitungDetail::where('id_perhitungan',$id)->get();
+        return response()->json($salesData);
     }
 
     public function delete($id) {
